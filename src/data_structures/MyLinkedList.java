@@ -35,38 +35,87 @@ public class MyLinkedList<T> implements List<T> {
         this.size = size;
     }
 
+    //done
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
+    //done
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size > 0) {
+            return false;
+        }
+        return true;
     }
 
+    //done
     @Override
     public boolean contains(Object o) {
+        Node current = first;
+        while (current != null) {
+            if (current.getValue().equals(o)) {
+                return true;
+            }
+            current = current.getNext();
+        }
         return false;
     }
 
+    //pending
     @Override
     public Iterator iterator() {
         return null;
     }
 
+    //done
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] objects = new Object[size];
+        if (!isEmpty()) {
+            Node current = first;
+            for (int i = 0; i < size; i++) {
+                objects[i] = current.getValue();
+                current = current.getNext();
+            }
+        }
+        return objects;
     }
 
+    //pending validaitons
     @Override
     public boolean add(Object o) {
-        return false;
+        Node newNode = new Node(o);
+        if (isEmpty()) {
+            first = last = newNode;
+        } else {
+            last.setNext(newNode);
+            last = newNode;
+        }
+        return true;
     }
 
+    //pending validations
     @Override
     public boolean remove(Object o) {
+        if (!isEmpty()) {
+            Node current = first;
+            Node previous = first;
+            for (int i = 0; i < size; i++) {
+                if (current.getValue().equals(o)) {
+                    if (first == current) {
+                        first = current.getNext();
+                    }
+                    if (last == current) {
+                        last = previous;
+                    }
+                    previous.setNext(current.getNext());
+                    current.setNext(null);
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -80,34 +129,83 @@ public class MyLinkedList<T> implements List<T> {
         return false;
     }
 
+    //done
     @Override
     public void clear() {
-
+        first = last = null;
+        size = 0;
     }
 
     @Override
     public T get(int index) {
+        if (!isEmpty()) {
+            Node<T> current = first;
+            for (int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+            return current.getValue();
+        }
         return null;
     }
 
     @Override
     public Object set(int index, Object element) {
+        if (!isEmpty()) {
+            Node current = first;
+            Object oldElement;
+            for (int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+            oldElement = current.getValue();
+            current.setValue(element);
+            return oldElement;
+        }
         return null;
     }
 
     @Override
     public void add(int index, Object element) {
-
+        if (!isEmpty()) {
+            Node newNode = new Node(element);
+            Node current = first;
+            Node previous = first;
+            for (int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+            newNode.setNext(current);
+            if (current == first) {
+                first = newNode;
+            }
+            previous.setNext(newNode);
+        }
     }
 
     @Override
     public T remove(int index) {
+        if (!isEmpty()) {
+            Node<T> current = first;
+            Node<T> previous = first;
+            for (int i = 0; i < index; i++) {
+                previous = current;
+                current = current.getNext();
+            }
+            previous.setNext(current.getNext());
+            current.setNext(null);
+            return current.getValue();
+        }
         return null;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        Node current = first;
+        for (int i = 0; i < size; i++) {
+            if (current.getValue().equals(o)) {
+                return i;
+            }
+            current = current.getNext();
+        }
+        return -1;
     }
 
     @Override
