@@ -11,6 +11,11 @@ public class MyLinkedList<T> implements List<T> {
     private Node last;
     private Integer size;
 
+    public MyLinkedList() {
+        size = 0;
+        first = last = null;
+    }
+
     public Node getFirst() {
         return first;
     }
@@ -121,12 +126,28 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection c) {
-        return false;
+        if (!c.isEmpty()) {
+            Iterator iterator = c.iterator();
+            while (iterator.hasNext()) {
+                add(iterator.next());
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean addAll(int index, Collection c) {
-        return false;
+        if (!c.isEmpty()) {
+            Iterator iterator = c.iterator();
+            while (iterator.hasNext()) {
+                add(index++, iterator.next());
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //done
@@ -210,7 +231,15 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        Node current = last;
+        int position = -1;
+        for (int i = 0; i < size; i++) {
+            if (current.getValue().equals(o)) {
+                position = i;
+            }
+            current = current.getNext();
+        }
+        return position;
     }
 
     @Override
@@ -235,17 +264,44 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean retainAll(Collection c) {
-        return false;
+        if (containsAll(c)) {
+            
+            return true;
+        } else {
+
+            return false;
+        }
     }
 
     @Override
     public boolean removeAll(Collection c) {
-        return false;
+        if (containsAll(c)) {
+            Iterator iterator = c.iterator();
+            while (iterator.hasNext()) {
+                remove(iterator.next());
+            }
+            return true;
+        } else {
+
+            return false;
+        }
     }
 
     @Override
     public boolean containsAll(Collection c) {
-        return false;
+        boolean containsCollection = false;
+        if (!c.isEmpty()) {
+            Iterator iterator = c.iterator();
+            while (iterator.hasNext()) {
+                containsCollection = contains(iterator.next());
+                if (containsCollection == false) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
