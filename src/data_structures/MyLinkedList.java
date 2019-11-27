@@ -44,7 +44,7 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean isEmpty() {
-        if (size > 0) {
+        if (size > 0 && first != null && last != null) {
             return false;
         }
         return true;
@@ -294,15 +294,14 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public Object[] toArray(Object[] a) {
-        if(a.length == size){
+        if (a.length == size) {
             a = toArray();
             return a;
-        }
-        else if(a.length > size){
+        } else if (a.length > size) {
             Object[] myListArray = toArray();
             a = Arrays.copyOf(myListArray, a.length);
             return a;
-        } else{
+        } else {
             return toArray();
         }
     }
