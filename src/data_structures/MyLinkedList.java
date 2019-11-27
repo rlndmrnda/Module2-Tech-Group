@@ -89,6 +89,7 @@ public class MyLinkedList<T> implements List<T> {
             last.setNext(newNode);
             last = newNode;
         }
+        size++;
         return true;
     }
 
@@ -107,6 +108,7 @@ public class MyLinkedList<T> implements List<T> {
                     }
                     previous.setNext(current.getNext());
                     current.setNext(null);
+                    size--;
                     return true;
                 }
             }
@@ -188,6 +190,7 @@ public class MyLinkedList<T> implements List<T> {
                 first = newNode;
             }
             previous.setNext(newNode);
+            size++;
         }
     }
 
@@ -202,6 +205,7 @@ public class MyLinkedList<T> implements List<T> {
             }
             previous.setNext(current.getNext());
             current.setNext(null);
+            size--;
             return current.getValue();
         }
         return null;

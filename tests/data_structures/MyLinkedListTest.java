@@ -16,5 +16,19 @@ public class MyLinkedListTest {
         MyLinkedList myLinkedList = new MyLinkedList();
         Assert.assertTrue(myLinkedList.isEmpty());
     }
+    @Test
+    public void testContains(){
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test");
+        Assert.assertTrue(myLinkedList.contains("test"));
+    }
+    @Test
+    public void testToArray(){
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        myLinkedList.add("test2");
+        Object[] items = myLinkedList.toArray();
+        Assert.assertTrue(items[0].toString().equals("test1") && items[1].toString().equals(("test2")) );
+    }
     
 }
