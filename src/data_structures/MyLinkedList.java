@@ -1,9 +1,6 @@
 package data_structures;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyLinkedList<T> implements List<T> {
 
@@ -40,13 +37,11 @@ public class MyLinkedList<T> implements List<T> {
         this.size = size;
     }
 
-    //done
     @Override
     public int size() {
         return size;
     }
 
-    //done
     @Override
     public boolean isEmpty() {
         if (size > 0) {
@@ -55,7 +50,6 @@ public class MyLinkedList<T> implements List<T> {
         return true;
     }
 
-    //done
     @Override
     public boolean contains(Object o) {
         Node current = first;
@@ -68,13 +62,11 @@ public class MyLinkedList<T> implements List<T> {
         return false;
     }
 
-    //pending
     @Override
     public Iterator iterator() {
         return null;
     }
 
-    //done
     @Override
     public Object[] toArray() {
         Object[] objects = new Object[size];
@@ -88,7 +80,6 @@ public class MyLinkedList<T> implements List<T> {
         return objects;
     }
 
-    //done
     @Override
     public boolean add(Object o) {
         Node newNode = new Node(o);
@@ -101,7 +92,6 @@ public class MyLinkedList<T> implements List<T> {
         return true;
     }
 
-    //pending validations
     @Override
     public boolean remove(Object o) {
         if (!isEmpty()) {
@@ -120,6 +110,7 @@ public class MyLinkedList<T> implements List<T> {
                     return true;
                 }
             }
+            return false;
         }
         return false;
     }
@@ -150,7 +141,6 @@ public class MyLinkedList<T> implements List<T> {
         }
     }
 
-    //done
     @Override
     public void clear() {
         first = last = null;
@@ -264,13 +254,7 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean retainAll(Collection c) {
-        if (containsAll(c)) {
-            
-            return true;
-        } else {
-
-            return false;
-        }
+        return false;
     }
 
     @Override
@@ -306,6 +290,16 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public Object[] toArray(Object[] a) {
-        return new Object[0];
+        if(a.length == size){
+            a = toArray();
+            return a;
+        }
+        else if(a.length > size){
+            Object[] myListArray = toArray();
+            a = Arrays.copyOf(myListArray, a.length);
+            return a;
+        } else{
+            return toArray();
+        }
     }
 }
