@@ -83,7 +83,7 @@ public class MyLinkedList<T> implements List<T> {
         return objects;
     }
 
-    //pending validaitons
+    //done
     @Override
     public boolean add(Object o) {
         Node newNode = new Node(o);
@@ -225,7 +225,12 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public List subList(int fromIndex, int toIndex) {
-        return null;
+        MyLinkedList sublist = new MyLinkedList();
+        Node first = new Node(get(fromIndex));
+        Node last = new Node(get(toIndex));
+        sublist.setFirst((first));
+        sublist.setLast((last));
+        return sublist;
     }
 
     @Override
