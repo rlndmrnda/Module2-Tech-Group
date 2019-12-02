@@ -10,44 +10,133 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class MyLinkedListTest {
     @Test
-    public void testIsEmpty() {
+    public void ShouldReturnTrueIfListEmpty() {
         MyLinkedList myLinkedList = new MyLinkedList();
-        Assert.assertTrue(myLinkedList.isEmpty());
+        assertTrue(myLinkedList.isEmpty());
     }
 
     @Test
-    public void testContains() {
+    public void ShouldReturnFalseIfListNotEmpty() {
         MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.add("test");
-        Assert.assertTrue(myLinkedList.contains("test"));
+        myLinkedList.add(new Object());
+        assertFalse(myLinkedList.isEmpty());
     }
 
     @Test
-    public void testToArray() {
+    public void ShouldReturnTrueIfContainsElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test 1");
+        myLinkedList.add("test 2");
+        myLinkedList.add("test 3");
+        assertTrue(myLinkedList.contains("test 2"));
+    }
+
+    @Test
+    public void ShouldReturnTrueIfContainsElementInListWithSingleElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test 1");
+        assertTrue(myLinkedList.contains("test 1"));
+    }
+
+    @Test
+    public void ShouldReturnFalseIfNotContainsElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test 1");
+        myLinkedList.add("test 2");
+        myLinkedList.add("test 3");
+        assertFalse(myLinkedList.contains("test 4"));
+    }
+
+    @Test
+    public void ShouldReturnFalseIfNotContainsElementInListWithSingleElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test 1");
+        assertFalse(myLinkedList.contains("test 2"));
+    }
+
+    @Test
+    public void ShouldReturnFalseIfNotContainsElementInEmptyList() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        assertFalse(myLinkedList.contains("test 2"));
+    }
+
+    @Test
+    public void ShouldReturnArrayWhenListHasElements() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        Object[] expectedElements = {"test 1", "test 2", "test 3"};
+        myLinkedList.add(expectedElements[0]);
+        myLinkedList.add(expectedElements[1]);
+        myLinkedList.add(expectedElements[2]);
+        Object[] actualElements = myLinkedList.toArray();
+        assertTrue(Arrays.deepEquals(expectedElements, actualElements));
+    }
+    @Test
+    public void ShouldReturnArrayWhenListHasASingleElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        Object[] expectedElements = {"test 1"};
+        myLinkedList.add(expectedElements[0]);
+        Object[] actualElements = myLinkedList.toArray();
+        assertTrue(Arrays.deepEquals(expectedElements, actualElements));
+    }
+    @Test
+    public void ShouldReturnEmptyArrayWhenListIsEmpty() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        Object[] expectedElements = new Object[0];
+        Object[] actualElements = myLinkedList.toArray();
+        assertTrue(Arrays.deepEquals(expectedElements, actualElements));
+    }
+    @Test
+    public void ShouldIncreaseSizeWhenAddElements() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        int expectedSize = 3;
+        myLinkedList.add("test1");
+        myLinkedList.add("test2");
+        myLinkedList.add("test3");
+        assertEquals(expectedSize, myLinkedList.size());
+    }
+
+    @Test
+    public void ShouldDecreaseSizeWhenRemoveElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        int expectedSize = 2;
+        myLinkedList.add("test1");
+        myLinkedList.add("test2");
+        myLinkedList.add("test3");
+        myLinkedList.remove("test1");
+        int actualSize = myLinkedList.size();
+        assertEquals(expectedSize, actualSize);
+    }
+
+    @Test
+    public void ShouldSizeEqualsToZeroWhenRemoveLastElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        int expectedSize = 0;
+        myLinkedList.add("test1");
+        myLinkedList.remove("test1");
+        int actualSize = myLinkedList.size();
+        assertEquals(expectedSize, actualSize);
+    }
+
+    @Test
+    public void ShouldContainsReturnFalseWhenRemoveElement() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");
         myLinkedList.add("test2");
-        Object[] items = myLinkedList.toArray();
-        Assert.assertTrue(items[0].toString().equals("test1") && items[1].toString().equals(("test2")));
+        myLinkedList.add("test3");
+        myLinkedList.remove("test2");
+        assertFalse(myLinkedList.contains("test2"));
     }
-
     @Test
-    public void testAdd() {
-        MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.add("test1");
-        Assert.assertTrue(myLinkedList.size() == 1 && myLinkedList.get(0).equals("test1"));
-    }
-
-    @Test
-    public void testRemove() {
+    public void ShouldContainsReturnFalseWhenRemoveLastElement() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");
         myLinkedList.remove("test1");
-        Assert.assertTrue(myLinkedList.isEmpty());
+        assertFalse(myLinkedList.contains("test1"));
     }
-
     @Test
     public void testClear() {
         MyLinkedList myLinkedList = new MyLinkedList();

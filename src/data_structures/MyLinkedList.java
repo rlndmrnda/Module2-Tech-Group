@@ -4,28 +4,27 @@ import java.util.*;
 
 public class MyLinkedList<T> implements List<T> {
 
-    private Node first;
-    private Node last;
+    private Node<T> first;
+    private Node<T> last;
     private Integer size;
 
     public MyLinkedList() {
         size = 0;
-        first = last = null;
     }
 
-    public Node getFirst() {
+    public Node<T> getFirst() {
         return first;
     }
 
-    public void setFirst(Node first) {
+    public void setFirst(Node<T> first) {
         this.first = first;
     }
 
-    public Node getLast() {
+    public Node<T> getLast() {
         return last;
     }
 
-    public void setLast(Node last) {
+    public void setLast(Node<T> last) {
         this.last = last;
     }
 
@@ -44,7 +43,7 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean isEmpty() {
-        if (size > 0 && first != null && last != null) {
+        if (size > 0) {
             return false;
         }
         return true;
@@ -52,7 +51,7 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        Node current = first;
+        Node<T> current = first;
         while (current != null) {
             if (current.getValue().equals(o)) {
                 return true;
@@ -71,7 +70,7 @@ public class MyLinkedList<T> implements List<T> {
     public Object[] toArray() {
         Object[] objects = new Object[size];
         if (!isEmpty()) {
-            Node current = first;
+            Node<T> current = first;
             for (int i = 0; i < size; i++) {
                 objects[i] = current.getValue();
                 current = current.getNext();
@@ -82,38 +81,46 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean add(Object o) {
-        Node newNode = new Node(o);
+        Node<T> newNode = new Node(o);
         if (isEmpty()) {
-            first = last = newNode;
+            this.first = this.last = newNode;
         } else {
-            last.setNext(newNode);
-            last = newNode;
+            this.last.setNext(newNode);
+            this.last = newNode;
         }
-        size++;
+        this.size++;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        if (!isEmpty()) {
-            Node current = first;
-            Node previous = first;
-            for (int i = 0; i < size; i++) {
-                if (current.getValue().equals(o)) {
-                    if (first == current) {
-                        first = current.getNext();
-                    }
-                    if (last == current) {
-                        last = previous;
-                    }
-                    previous.setNext(current.getNext());
-                    current.setNext(null);
-                    size--;
+        if(isEmpty()){
+            return  false;
+        }
+        Node current = this.first;
+        Node previous = this.first;
+        do {
+            if (current.getValue().equals(o)) {
+                if(this.size ==1){
+                    this.first =  this.last = null;
+                    this.size --;
                     return true;
                 }
+                if (current == this.first) {
+                    this.first = this.first.getNext();
+                }
+                if (current == this.last) {
+                    previous.setNext(null);
+                    this.last = previous;
+                }
+                previous.setNext(current.getNext());
+                size--;
+                return true;
             }
-            return false;
+            previous = current;
+            current = current.getNext();
         }
+        while (current.getNext() != null);
         return false;
     }
 
@@ -179,9 +186,9 @@ public class MyLinkedList<T> implements List<T> {
     @Override
     public void add(int index, Object element) {
         if (!isEmpty()) {
-            Node newNode = new Node(element);
-            Node current = first;
-            Node previous = first;
+            Node<T> newNode = new Node(element);
+            Node<T> current = first;
+            Node<T> previous = first;
             for (int i = 0; i < index; i++) {
                 current = current.getNext();
             }
@@ -213,7 +220,7 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public int indexOf(Object o) {
-        Node current = first;
+        Node<T> current = first;
         for (int i = 0; i < size; i++) {
             if (current.getValue().equals(o)) {
                 return i;
@@ -225,7 +232,7 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        Node current = last;
+        Node<T> current = last;
         int position = -1;
         for (int i = 0; i < size; i++) {
             if (current.getValue().equals(o)) {
@@ -249,8 +256,8 @@ public class MyLinkedList<T> implements List<T> {
     @Override
     public List subList(int fromIndex, int toIndex) {
         MyLinkedList sublist = new MyLinkedList();
-        Node first = new Node(get(fromIndex));
-        Node last = new Node(get(toIndex));
+        Node<T> first = new Node(get(fromIndex));
+        Node<T> last = new Node(get(toIndex));
         sublist.setFirst((first));
         sublist.setLast((last));
         return sublist;
