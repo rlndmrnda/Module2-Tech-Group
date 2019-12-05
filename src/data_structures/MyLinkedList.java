@@ -94,31 +94,15 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean remove(Object o) {
-        if(isEmpty()){
-            return  false;
+        if (isEmpty()) {
+            return false;
         }
         Node current = this.first;
-        Node previous = this.first;
-
-        while (current != null){
+        for (int i = 0; i < this.size; i++) {
             if (current.getValue().equals(o)) {
-                if(this.size ==1){
-                    this.first =  this.last = null;
-                    this.size --;
-                    return true;
-                }
-                if (current == this.first) {
-                    this.first = this.first.getNext();
-                }
-                if (current == this.last) {
-                    previous.setNext(null);
-                    this.last = previous;
-                }
-                previous.setNext(current.getNext());
-                size--;
+                remove(i);
                 return true;
             }
-            previous = current;
             current = current.getNext();
         }
         return false;
@@ -203,19 +187,45 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        if (!isEmpty()) {
+        if (isEmpty()) {
+            return null;
+        }
+        if (index == 0) {
+            return removeFirstElement();
+        } else if (index == this.size - 1) {
+            return removeLastElement();
+        } else {
             Node<T> current = first;
-            Node<T> previous = first;
-            for (int i = 0; i < index; i++) {
-                previous = current;
+            for (int i = 0; i < index - 1; i++) {
                 current = current.getNext();
             }
-            previous.setNext(current.getNext());
-            current.setNext(null);
+            T elementRemoved = current.getNext().getValue();
+            current.setNext(current.getNext().getNext());
             size--;
-            return current.getValue();
+            return elementRemoved;
         }
-        return null;
+    }
+
+    private T removeLastElement() {
+        Node<T> current = this.first;
+        while (current.getNext() != this.last) {
+            current = current.getNext();
+        }
+        T elementRemoved = current.getNext().getValue();
+        current.setNext(null);
+        this.last = current;
+        size--;
+        return elementRemoved;
+    }
+
+    private T removeFirstElement() {
+        T elementRemoved = this.first.getValue();
+        this.first = this.first.getNext();
+        if (first == null) {
+            this.last = null;
+        }
+        size--;
+        return elementRemoved;
     }
 
     @Override

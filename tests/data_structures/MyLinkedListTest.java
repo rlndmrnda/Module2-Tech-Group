@@ -150,6 +150,36 @@ public class MyLinkedListTest {
         assertFalse(myLinkedList.remove("test2"));
     }
     @Test
+    public void ShouldReturnElementIfRemoveByIndex() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        myLinkedList.add("test2");
+        myLinkedList.add("test3");
+        assertEquals("test2",myLinkedList.remove(1));
+    }
+    @Test
+    public void ShouldReturnElementIfRemoveFirstByIndex() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        myLinkedList.add("test2");
+        myLinkedList.add("test3");
+        assertEquals("test1",myLinkedList.remove(0));
+    }
+    @Test
+    public void ShouldReturnElementIfRemoveLastByIndex() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        myLinkedList.add("test2");
+        myLinkedList.add("test3");
+        assertEquals("test3",myLinkedList.remove(2));
+    }
+    @Test
+    public void ShouldReturnElementIfRemoveOnlyElementByIndex() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        assertEquals("test1",myLinkedList.remove(0));
+    }
+    @Test
     public void testClear() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");

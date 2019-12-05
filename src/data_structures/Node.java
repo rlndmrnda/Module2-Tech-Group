@@ -10,7 +10,7 @@ public class Node<E> {
         this.next = null;
     }
 
-    public Node getNext() {
+    public Node<E> getNext() {
         return next;
     }
 
