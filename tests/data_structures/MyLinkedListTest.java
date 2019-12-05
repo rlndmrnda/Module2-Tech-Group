@@ -138,6 +138,18 @@ public class MyLinkedListTest {
         assertFalse(myLinkedList.contains("test1"));
     }
     @Test
+    public void ShouldReturnTrueIfRemoveElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        assertTrue(myLinkedList.remove("test1"));
+    }
+    @Test
+    public void ShouldReturnFalseIfRemoveNonExistentElement() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        assertFalse(myLinkedList.remove("test2"));
+    }
+    @Test
     public void testClear() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");

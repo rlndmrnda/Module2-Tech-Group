@@ -99,7 +99,8 @@ public class MyLinkedList<T> implements List<T> {
         }
         Node current = this.first;
         Node previous = this.first;
-        do {
+
+        while (current != null){
             if (current.getValue().equals(o)) {
                 if(this.size ==1){
                     this.first =  this.last = null;
@@ -120,7 +121,6 @@ public class MyLinkedList<T> implements List<T> {
             previous = current;
             current = current.getNext();
         }
-        while (current.getNext() != null);
         return false;
     }
 
