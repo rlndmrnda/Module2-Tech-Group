@@ -8,11 +8,20 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class MyLInkedListTestRemove {
+
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void ShouldReturnTrueIfRemoveElement() {
@@ -62,8 +71,9 @@ public class MyLInkedListTestRemove {
         assertTrue(isRemoved);
         assertEquals(myLinkedList.getLast().getValue(), "test2");
     }
+
     @Test
-    public void ShouldTrueWhenRemoveOnlyElement() {
+    public void ShouldReturnTrueWhenRemoveOnlyElement() {
         MyLinkedList myLinkedList = new MyLinkedList();
         int expectedSize = 0;
         myLinkedList.add("test1");
@@ -88,7 +98,7 @@ public class MyLInkedListTestRemove {
     }
 
     @Test
-    public void ShouldReturnElementIfRemoveFirstByIndex() {
+    public void ShouldUpdateFirstIfRemoveByIndex() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");
         myLinkedList.add("test2");
@@ -97,29 +107,55 @@ public class MyLInkedListTestRemove {
         int expectedSize = 2;
         assertEquals(expectedSize, myLinkedList.size());
         assertEquals("test1", removedElement);
+        assertEquals(myLinkedList.getFirst().getValue(), "test2");
     }
 
     @Test
-    public void ShouldReturnElementIfRemoveLastByIndex() {
+    public void ShouldUpdateLastIfRemoveLastByIndex() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");
         myLinkedList.add("test2");
         myLinkedList.add("test3");
-        assertEquals("test3", myLinkedList.remove(2));
+        Object removedObject = myLinkedList.remove(2);
+        int expectedSize = 2;
+        assertEquals(expectedSize, myLinkedList.size());
+        assertEquals("test3", removedObject);
+        assertEquals(myLinkedList.getLast().getValue(), "test2");
     }
 
     @Test
     public void ShouldReturnElementIfRemoveOnlyElementByIndex() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");
-        assertEquals("test1", myLinkedList.remove(0));
+        Object removedObject = myLinkedList.remove(0);
+        int expectedSize = 0;
+        assertEquals("test1", removedObject);
+        assertEquals(expectedSize, myLinkedList.size());
+        assertEquals(null, myLinkedList.getFirst());
+        assertEquals(null, myLinkedList.getLast());
     }
 
     @Test
-    public void testClear() {
+    public void ShouldReturnExceptionIfRemoveIndexGreaterThanSize() {
         MyLinkedList myLinkedList = new MyLinkedList();
         myLinkedList.add("test1");
-        myLinkedList.clear();
-        Assert.assertTrue(myLinkedList.isEmpty());
+        exception.expect(IndexOutOfBoundsException.class);
+        Object removedObject = myLinkedList.remove(1);
     }
+
+    @Test
+    public void ShouldRemoveCollection() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        myLinkedList.add("test2");
+        myLinkedList.add("test3");
+        Collection collection = new ArrayList();
+        collection.add("test1");
+        collection.add("test3");
+        myLinkedList.removeAll(collection);
+        int expectedSize = 1;
+        assertEquals(expectedSize, myLinkedList.size());
+        assertEquals("test2", myLinkedList.get(0));
+    }
+
 }

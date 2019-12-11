@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class MyLinkedListTest {
     @Test
@@ -26,43 +27,6 @@ public class MyLinkedListTest {
         assertFalse(myLinkedList.isEmpty());
     }
 
-    @Test
-    public void ShouldReturnTrueIfContainsElement() {
-        MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.add("test 1");
-        myLinkedList.add("test 2");
-        myLinkedList.add("test 3");
-        assertTrue(myLinkedList.contains("test 2"));
-    }
-
-    @Test
-    public void ShouldReturnTrueIfContainsElementInListWithSingleElement() {
-        MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.add("test 1");
-        assertTrue(myLinkedList.contains("test 1"));
-    }
-
-    @Test
-    public void ShouldReturnFalseIfNotContainsElement() {
-        MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.add("test 1");
-        myLinkedList.add("test 2");
-        myLinkedList.add("test 3");
-        assertFalse(myLinkedList.contains("test 4"));
-    }
-
-    @Test
-    public void ShouldReturnFalseIfNotContainsElementInListWithSingleElement() {
-        MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.add("test 1");
-        assertFalse(myLinkedList.contains("test 2"));
-    }
-
-    @Test
-    public void ShouldReturnFalseIfNotContainsElementInEmptyList() {
-        MyLinkedList myLinkedList = new MyLinkedList();
-        assertFalse(myLinkedList.contains("test 2"));
-    }
 
     @Test
     public void ShouldReturnArrayWhenListHasElements() {
@@ -74,6 +38,7 @@ public class MyLinkedListTest {
         Object[] actualElements = myLinkedList.toArray();
         assertTrue(Arrays.deepEquals(expectedElements, actualElements));
     }
+
     @Test
     public void ShouldReturnArrayWhenListHasASingleElement() {
         MyLinkedList myLinkedList = new MyLinkedList();
@@ -82,6 +47,7 @@ public class MyLinkedListTest {
         Object[] actualElements = myLinkedList.toArray();
         assertTrue(Arrays.deepEquals(expectedElements, actualElements));
     }
+
     @Test
     public void ShouldReturnEmptyArrayWhenListIsEmpty() {
         MyLinkedList myLinkedList = new MyLinkedList();
@@ -90,4 +56,26 @@ public class MyLinkedListTest {
         assertTrue(Arrays.deepEquals(expectedElements, actualElements));
     }
 
+    @Test
+    public void ShouldReturnIterator() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("element 1");
+        myLinkedList.add("element 2");
+        myLinkedList.add("element 3");
+        Iterator iterator = myLinkedList.iterator();
+        int i = 1;
+        while (iterator.hasNext()) {
+            Object element = iterator.next();
+            assertEquals("element " + i, element);
+            i++;
+        }
+    }
+
+    @Test
+    public void testClear() {
+        MyLinkedList myLinkedList = new MyLinkedList();
+        myLinkedList.add("test1");
+        myLinkedList.clear();
+        Assert.assertTrue(myLinkedList.isEmpty());
+    }
 }

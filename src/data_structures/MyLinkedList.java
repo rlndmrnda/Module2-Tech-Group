@@ -1,5 +1,6 @@
 package data_structures;
 
+import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class MyLinkedList<T> implements List<T> {
@@ -63,9 +64,32 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public Iterator iterator() {
-        return null;
+        Iterator iterator = new MyIterator();
+        return iterator;
     }
+    private class MyIterator implements Iterator {
+        private int position;
+        private Node<T> current;
+        public MyIterator(){
+            this.current = first;
+        }
+        @Override
+        public boolean hasNext() {
+            if(position >= size){
+                return false;
+            } else{
+                return true;
+            }
+        }
 
+        @Override
+        public Object next() {
+            Node next = current;
+            this.current = this.current.getNext();
+            position++;
+            return next.getValue();
+        }
+    }
     @Override
     public Object[] toArray() {
         Object[] objects = new Object[size];
@@ -123,6 +147,10 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public boolean addAll(int index, Collection c) {
+
+        if (index > this.size) {
+            throw new IndexOutOfBoundsException();
+        }
         if (!c.isEmpty()) {
             Iterator iterator = c.iterator();
             while (iterator.hasNext()) {
@@ -169,24 +197,46 @@ public class MyLinkedList<T> implements List<T> {
 
     @Override
     public void add(int index, Object element) {
-        if (!isEmpty()) {
-            Node<T> newNode = new Node(element);
-            Node<T> current = first;
-            Node<T> previous = first;
-            for (int i = 0; i < index; i++) {
-                current = current.getNext();
-            }
-            newNode.setNext(current);
-            if (current == first) {
-                first = newNode;
-            }
-            previous.setNext(newNode);
-            size++;
+        if (index > this.size || isEmpty()) {
+            throw new IndexOutOfBoundsException();
         }
+        if (index == 0) {
+            addAtStart(element);
+            return;
+        }
+        if (index == this.size) {
+            addAtTheEnd(element);
+            return;
+        }
+        Node<T> newNode = new Node(element);
+        Node<T> current = first;
+        for (int i = 0; i < index - 1; i++) {
+            current = current.getNext();
+        }
+        newNode.setNext(current.getNext());
+        current.setNext(newNode);
+        size++;
+    }
+
+    private void addAtTheEnd(Object element) {
+        Node newNode = new Node(element);
+        this.last.setNext(newNode);
+        this.last = newNode;
+        size++;
+    }
+
+    private void addAtStart(Object element) {
+        Node newNode = new Node(element);
+        newNode.setNext(this.first);
+        this.first = newNode;
+        size++;
     }
 
     @Override
     public T remove(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
         if (isEmpty()) {
             return null;
         }
