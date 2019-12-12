@@ -67,17 +67,20 @@ public class MyLinkedList<T> implements List<T> {
         Iterator iterator = new MyIterator();
         return iterator;
     }
+
     private class MyIterator implements Iterator {
         private int position;
         private Node<T> current;
-        public MyIterator(){
+
+        public MyIterator() {
             this.current = first;
         }
+
         @Override
         public boolean hasNext() {
-            if(position >= size){
+            if (position >= size) {
                 return false;
-            } else{
+            } else {
                 return true;
             }
         }
@@ -90,6 +93,7 @@ public class MyLinkedList<T> implements List<T> {
             return next.getValue();
         }
     }
+
     @Override
     public Object[] toArray() {
         Object[] objects = new Object[size];
@@ -117,19 +121,31 @@ public class MyLinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(Object o) {
-        if (isEmpty()) {
-            return false;
-        }
+    public boolean remove(Object element) {
         Node current = this.first;
-        for (int i = 0; i < this.size; i++) {
-            if (current.getValue().equals(o)) {
-                remove(i);
-                return true;
+        Node previous = this.first;
+        boolean isRemoved = false;
+        while (current != null) {
+            if (current.getValue().equals(element)) {
+                if(this.size == 1){
+                    first = last = null;
+                }
+                if(current == this.last){
+                    this.last = previous;
+                }
+                if(current == this.first){
+                    this.first = current.getNext();
+                    current = previous = this.first;
+                }
+                previous.setNext(current.getNext());
+                current = previous;
+                size--;
+                isRemoved = true;
             }
+            previous = current;
             current = current.getNext();
         }
-        return false;
+        return isRemoved;
     }
 
     @Override
@@ -371,5 +387,19 @@ public class MyLinkedList<T> implements List<T> {
         } else {
             return toArray();
         }
+    }
+
+    @Override
+    public String toString(){
+        String concatenatedElements = "[";
+        Node current = first;
+        while (current != null){
+            concatenatedElements += current.getValue().toString();
+            if(current != last){
+                concatenatedElements +=  ", ";
+            }
+            current = current.getNext();
+        }
+        return concatenatedElements + "]";
     }
 }
