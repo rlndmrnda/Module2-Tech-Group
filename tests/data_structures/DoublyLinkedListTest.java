@@ -9,10 +9,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class MyLinkedListTest {
+public class DoublyLinkedListTest {
     @Test
     public void testAddMethodShouldIncreaseTheSizeOfTheList() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("sdsdf");
         myLinkedList.add("dsdf");
@@ -23,7 +23,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testToString() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("world");
         myLinkedList.add("hello");
@@ -33,7 +33,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testGetMethodShouldReturnTheValueOfTheNodeOnTheSpecifiedIndex() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("world");
         myLinkedList.add("people");
@@ -44,10 +44,9 @@ public class MyLinkedListTest {
         assertEquals("hello", myLinkedList.get(2));
     }
 
-
     @Test
     public void testConstainsShouldReturnTrueIfExists() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("world");
         myLinkedList.add("people");
@@ -60,7 +59,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testClearLinkedList() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("world");
         myLinkedList.add("people");
@@ -73,7 +72,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testRemoveElementInTheMiddleOfTheList() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("people");
         myLinkedList.add("hello");
@@ -90,7 +89,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testRemoveFirstElement() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("people");
         myLinkedList.add("hello");
@@ -109,7 +108,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testRemoveLastElement() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("people");
         myLinkedList.add("hello");
@@ -127,7 +126,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testRemoveNonExistentElement() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("people");
         myLinkedList.add("hello");
@@ -142,7 +141,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testRemoveTheOnlyElement() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("people");
 
@@ -157,7 +156,7 @@ public class MyLinkedListTest {
 
     @Test
     public void testRemoveMultipleCoincidences() {
-        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
+        DoublyCircularLinkedList<String> myLinkedList = new DoublyCircularLinkedList<>();
 
         myLinkedList.add("people");
         myLinkedList.add("hello");
