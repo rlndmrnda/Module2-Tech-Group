@@ -5,14 +5,23 @@ public class DoublyCircularLinkedList<T> {
     private Node<T> last;
     private Integer size;
 
-    DoublyCircularLinkedList(){
+    DoublyCircularLinkedList() {
         this.first = null;
         this.last = null;
         this.size = 0;
     }
-    public Node<T> add(String sdsdf) {
 
-        return null;
+    public Node<T> add(T element) {
+        Node<T> newNode = new Node<>(element);
+        if (this.size == 0) {
+            this.first = newNode;
+        } else {
+            this.last.setNext(newNode);
+            newNode.setPrevious(this.last);
+        }
+        this.last = newNode;
+        this.size++;
+        return newNode;
     }
 
     public int size() {
@@ -20,25 +29,76 @@ public class DoublyCircularLinkedList<T> {
     }
 
     public T get(int index) {
-        return null;
+        if (index >= this.size || index < 0) {
+            throw new IndexOutOfBoundsException("Index does not exists in the list");
+        }
+        Node<T> cursor = this.first;
+        for (int i = 0; i < index; i++) {
+            cursor = cursor.getNext();
+        }
+        return cursor.getValue();
     }
 
-    public boolean contains(T hola) {
+    public boolean contains(T element) {
+        Node<T> current = first;
+        while (current != null) {
+            if (current.getValue().equals(element)) {
+                return true;
+            }
+            current = current.getNext();
+        }
         return false;
     }
 
     public void clear() {
+        this.size = 0;
+        this.first = null;
+        this.last = null;
     }
 
-    public boolean remove(T hello) {
-        return false;
+    public boolean remove(T element) {
+        Node<T> current = first;
+        boolean isRemoved = false;
+        while (current != null) {
+            if (current.getValue().equals(element)) {
+                if (current == this.first) {
+                    this.first = current.getNext();
+                } else {
+                    current.getPrevious().setNext(current.getNext());
+                }
+                if (current == this.last) {
+                    this.last = current.getPrevious();
+                } else {
+                    current.getNext().setPrevious(current.getPrevious());
+                }
+//                current.setNext(null);
+//                current.setPrevious(null);
+                isRemoved = true;
+                this.size--;
+            }
+            current = current.getNext();
+        }
+        return isRemoved;
     }
 
     public Node<T> getFirst() {
-        return null;
+        return this.first;
     }
 
     public Node<T> getLast() {
-        return null;
+        return this.last;
+    }
+    @Override
+    public String toString(){
+        StringBuilder result = new StringBuilder("[");
+        Node<T> cursor = this.first;
+        while(cursor != null){
+            result.append(cursor.getValue().toString());
+            if(cursor != this.last){
+                result.append(", ");
+            }
+            cursor = cursor.getNext();
+        }
+        return result.append("]").toString();
     }
 }
