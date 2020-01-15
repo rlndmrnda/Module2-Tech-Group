@@ -71,12 +71,15 @@ public class DoublyCircularLinkedList<T> {
                 } else {
                     current.getNext().setPrevious(current.getPrevious());
                 }
-//                current.setNext(null);
-//                current.setPrevious(null);
+                Node<T> removed = current;
+                current = current.getNext();
+                removed.setNext(null);
+                removed.setPrevious(null);
                 isRemoved = true;
                 this.size--;
+            } else {
+                current = current.getNext();
             }
-            current = current.getNext();
         }
         return isRemoved;
     }
@@ -88,13 +91,14 @@ public class DoublyCircularLinkedList<T> {
     public Node<T> getLast() {
         return this.last;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder result = new StringBuilder("[");
         Node<T> cursor = this.first;
-        while(cursor != null){
+        while (cursor != null) {
             result.append(cursor.getValue().toString());
-            if(cursor != this.last){
+            if (cursor != this.last) {
                 result.append(", ");
             }
             cursor = cursor.getNext();
